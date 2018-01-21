@@ -1,0 +1,17 @@
+{
+  "name": "jazz-midi-electron",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "jazz-soft (http://jazz-soft.net/)",
+  "dependencies": {
+    "winreg": "^1.2.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jazz-soft/jazz-midi-electron.git"
+  },
+  "homepage": "http://jazz-soft.net",
+  "bugs": "http://jazz-soft.org",
+  "license": "MIT"
+}
