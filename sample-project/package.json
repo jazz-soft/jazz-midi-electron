@@ -1,0 +1,15 @@
+{
+  "name": "sample-project",
+  "version": "0.0.0",
+  "description": "Sample Electron project",
+  "main": "index.js",
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "jazz-midi-electron": "0.0.0",
+    "jzz": "^0.4.2",
+    "jzz-input-kbd": "^1.0.0",
+    "jzz-synth-osc": "^1.0.0"
+  },
+  "private": true
+}

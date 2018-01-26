@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>JZZ sample project</title>
+<style type="text/css">
+.inner {position:absolute; bottom:0; left:0; width:100%; text-align:center;}
+select {width:15em;}
+</style>
+</head>
+<body>
+<h1>JZZ sample project</h1>
+<div id=piano></div>
+
+<p>
+<a href=# onclick='shell.openExternal("https://jazz-soft.net")'>https://jazz-soft.net</a>
+</p>
+
+</body>
+<script><!--
+var shell = require('electron').shell;
+var JZZ = require('jzz');
+require('jzz-synth-osc')(JZZ);
+require('jzz-input-kbd')(JZZ);
+
+  // Register Web Audio synth to have at least one MIDI-Out port
+  JZZ.synth.OSC.register('Web Audio');
+
+  // Create HTML piano
+  var piano = JZZ.input.Kbd({at: 'piano', from: 'C5', to: 'B5', onCreate: function(){
+    this.getBlackKeys().setStyle({color:'#fff'});
+    this.getKey('C5').setInnerHTML('<span class=inner>Z</span>');
+    this.getKey('C#5').setInnerHTML('<span class=inner>S</span>');
+    this.getKey('D5').setInnerHTML('<span class=inner>X</span>');
+    this.getKey('D#5').setInnerHTML('<span class=inner>D</span>');
+    this.getKey('E5').setInnerHTML('<span class=inner>C</span>');
+    this.getKey('F5').setInnerHTML('<span class=inner>V</span>');
+    this.getKey('F#5').setInnerHTML('<span class=inner>G</span>');
+    this.getKey('G5').setInnerHTML('<span class=inner>B</span>');
+    this.getKey('G#5').setInnerHTML('<span class=inner>H</span>');
+    this.getKey('A5').setInnerHTML('<span class=inner>N</span>');
+    this.getKey('A#5').setInnerHTML('<span class=inner>J</span>');
+    this.getKey('B5').setInnerHTML('<span class=inner>M</span>');
+  }});
+
+  // Enable keyboard input
+  JZZ.input.ASCII({
+    Z:'C5', S:'C#5', X:'D5', D:'D#5', C:'E5', V:'F5', G:'F#5', B:'G5', H:'Ab5', N:'A5', J:'Bb5', M:'B5'
+  }).connect(piano);
+
+  piano.connect(JZZ().openMidiOut());
+
+--></script>
+</html>
