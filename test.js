@@ -1,1 +1,1 @@
-require('.')();
+require('.')().then(function() { console.log('done!');}, function(err) { console.log(err);})

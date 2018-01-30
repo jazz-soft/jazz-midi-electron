@@ -12,8 +12,8 @@ select {width:15em;}
 <h1>JZZ sample project</h1>
 
 <p>
-MIDI In: <select id=selectmidiin></select> &rArr;
-MIDI Out: <select id=selectmidiout></select>
+MIDI In: <select id=selectmidiin><option>Please wait...</option></select> &xrArr;
+MIDI Out: <select id=selectmidiout><option>Please wait...</option></select>
 </p>
 
 <p id=piano></p>
@@ -29,106 +29,95 @@ var JZZ = require('jzz');
 require('jzz-synth-osc')(JZZ);
 require('jzz-input-kbd')(JZZ);
 
-function electronMidiBug() {}
-navigator.requestMIDIAccess().then(electronMidiBug, electronMidiBug);
+var selectMidiIn = document.getElementById('selectmidiin');
+var selectMidiOut = document.getElementById('selectmidiout');
+var midiInName = 'HTML Piano';
+var midiOutName = 'Not available';
+var midiInPort;
+var midiOutPort;
 
-function main() {
-  var selectMidiIn = document.getElementById('selectmidiin');
-  var selectMidiOut = document.getElementById('selectmidiout');
-  var midiInName = 'HTML Piano';
-  var midiOutName = 'Not available';
-  var midiInPort;
-  var midiOutPort;
+function setListbox(lb, s) {
+  for (var i = 0; i < lb.options.length; i++) if (lb.options[i].value == s) lb.options[i].selected = 1;
+}
 
-  function setListbox(lb, s) {
-    for (var i = 0; i < lb.options.length; i++) if (lb.options[i].value == s) lb.options[i].selected = 1;
+// Register Web Audio synth to have at least one MIDI-Out port
+JZZ.synth.OSC.register('Web Audio');
+
+// Create HTML piano
+var piano = JZZ.input.Kbd({at: 'piano', from: 'F4', to: 'E6', onCreate: function(){
+  this.getBlackKeys().setStyle({color:'#fff'});
+  this.getKey('C5').setInnerHTML('<span class=inner>Z</span>');
+  this.getKey('C#5').setInnerHTML('<span class=inner>S</span>');
+  this.getKey('D5').setInnerHTML('<span class=inner>X</span>');
+  this.getKey('D#5').setInnerHTML('<span class=inner>D</span>');
+  this.getKey('E5').setInnerHTML('<span class=inner>C</span>');
+  this.getKey('F5').setInnerHTML('<span class=inner>V</span>');
+  this.getKey('F#5').setInnerHTML('<span class=inner>G</span>');
+  this.getKey('G5').setInnerHTML('<span class=inner>B</span>');
+  this.getKey('G#5').setInnerHTML('<span class=inner>H</span>');
+  this.getKey('A5').setInnerHTML('<span class=inner>N</span>');
+  this.getKey('A#5').setInnerHTML('<span class=inner>J</span>');
+  this.getKey('B5').setInnerHTML('<span class=inner>M</span>');
+}});
+
+// Enable keyboard input
+JZZ.input.ASCII({
+  Z:'C5', S:'C#5', X:'D5', D:'D#5', C:'E5', V:'F5', G:'F#5', B:'G5', H:'Ab5', N:'A5', J:'Bb5', M:'B5'
+}).connect(piano);
+
+midiInPort = piano;
+
+// Connection between MIDI-In and MIDI-Out
+var through = JZZ.Widget();
+
+// When HTML Piano is not selected, it will be animated by another MIDI-In
+var animate = JZZ.Widget({ _receive: function(msg) {
+  this.emit(msg.setChannel(0)); // Convert all MIDI channels to channel 1 (zero-based)
+}}).connect(piano);
+
+function onMidiOutSuccess() {
+  if (midiOutPort) {
+    midiOutPort.close();
   }
+  midiOutPort = this;
+  through.connect(this);
+  midiOutName = this.name();
+  setListbox(selectMidiOut, midiOutName);
+}
 
+function onMidiOutFail() {
+  if (midiOutPort) through.connect(midiOutPort);
+  setListbox(selectMidiOut, midiOutName);
+}
 
-  // Register Web Audio synth to have at least one MIDI-Out port
-  JZZ.synth.OSC.register('Web Audio');
+function onMidiInSuccess() {  // Called on all MIDI-In ports except HTML Piano
+  if (midiInPort && midiInPort != piano) {
+    midiInPort.close();
+  }
+  midiInPort = this;
+  this.connect(through);
+  this.connect(animate);
+  midiInName = this.name();
+  setListbox(selectMidiIn, midiInName);
+}
 
-  // Create HTML piano
-  var piano = JZZ.input.Kbd({at: 'piano', from: 'C5', to: 'B5', onCreate: function(){
-    this.getBlackKeys().setStyle({color:'#fff'});
-    this.getKey('C5').setInnerHTML('<span class=inner>Z</span>');
-    this.getKey('C#5').setInnerHTML('<span class=inner>S</span>');
-    this.getKey('D5').setInnerHTML('<span class=inner>X</span>');
-    this.getKey('D#5').setInnerHTML('<span class=inner>D</span>');
-    this.getKey('E5').setInnerHTML('<span class=inner>C</span>');
-    this.getKey('F5').setInnerHTML('<span class=inner>V</span>');
-    this.getKey('F#5').setInnerHTML('<span class=inner>G</span>');
-    this.getKey('G5').setInnerHTML('<span class=inner>B</span>');
-    this.getKey('G#5').setInnerHTML('<span class=inner>H</span>');
-    this.getKey('A5').setInnerHTML('<span class=inner>N</span>');
-    this.getKey('A#5').setInnerHTML('<span class=inner>J</span>');
-    this.getKey('B5').setInnerHTML('<span class=inner>M</span>');
-  }});
-
-  // Enable keyboard input
-  JZZ.input.ASCII({
-    Z:'C5', S:'C#5', X:'D5', D:'D#5', C:'E5', V:'F5', G:'F#5', B:'G5', H:'Ab5', N:'A5', J:'Bb5', M:'B5'
-  }).connect(piano);
-
-  midiInPort = piano;
-
-  var through = JZZ.Widget();
-
-  function onMidiOutSuccess() {
-    if (midiOutPort) {
-      midiOutPort.close();
+function onMidiInFail() {
+  if (midiInPort) {
+    midiInPort.connect(through);
+    if (midiInPort != piano) {
+      midiInPort.connect(animate);
     }
-    midiOutPort = this;
-    through.connect(this);
-    midiOutName = this.name();
-    setListbox(selectMidiOut, midiOutName);
   }
-
-  function onMidiOutFail() {
-    if (midiOutPort) through.connect(midiOutPort);
-    setListbox(selectMidiOut, midiOutName);
-  }
-
-  function onMidiInSuccess() {
-    if (midiInPort && midiInPort != piano) {
-      midiInPort.close();
-    }
-    midiInPort = this;
-    this.connect(through);
-    midiInName = this.name();
-    setListbox(selectMidiIn, midiInName);
-  }
-
-  function onMidiInFail() {
-    if (midiInPort) midiInPort.connect(through);
-    setListbox(selectMidiIn, midiInName);
-  }
-
-JZZ().and(function(){
-  var i;
-console.log('JZZ initialized');
-  for (i = 0; i < this.info().outputs.length; i++) {
-console.log('out:', this.info().outputs[i].name);
-    selectMidiOut[i] = new Option(this.info().outputs[i].name);
-  }
-  if (!i) {
-    selectMidiOut[i] = new Option('Not available');
-  }
-  for (i = 0; i < this.info().inputs.length; i++) {
-console.log('in:', this.info().inputs[i].name);
-    selectMidiIn[i] = new Option(this.info().inputs[i].name);
-  }
-  selectMidiIn[i] = new Option('HTML Piano');
-  selectMidiIn[i].selected = 1;
-});
-
-JZZ().openMidiOut().or(onMidiOutFail).and(onMidiOutSuccess);
-JZZ().openMidiIn().or(onMidiInFail).and(onMidiInSuccess);
+  setListbox(selectMidiIn, midiInName);
+}
 
 function changeMidiIn() {
   var name = selectMidiIn.options[selectMidiIn.selectedIndex].value;
   if (name == midiInName) return;
-  if (midiInPort) midiInPort.disconnect(through);
+  if (midiInPort) {
+    midiInPort.disconnect(through);
+    midiInPort.disconnect(animate);
+  }
   if (name == 'HTML Piano') {
     if (midiInPort) midiInPort.close();
     midiInPort = piano;
@@ -145,13 +134,27 @@ function changeMidiOut() {
   JZZ().openMidiOut(name).or(onMidiOutFail).and(onMidiOutSuccess);
 }
 
-selectMidiIn.addEventListener('change', changeMidiIn);
-selectMidiOut.addEventListener('change', changeMidiOut);
-}
-
-// Electron MIDI bug ???
-// needs a delay after the first call of requestMIDIAccess
-setTimeout(main, 500);
+// JZZ() engine must be started after jazz-midi-electron is initialized
+require('jazz-midi-electron')().then(function() {
+  JZZ().and(function(){
+    var i;
+    for (i = 0; i < this.info().outputs.length; i++) {
+      selectMidiOut[i] = new Option(this.info().outputs[i].name);
+    }
+    if (!i) {
+      selectMidiOut[i] = new Option('Not available');
+    }
+    for (i = 0; i < this.info().inputs.length; i++) {
+      selectMidiIn[i] = new Option(this.info().inputs[i].name);
+    }
+    selectMidiIn[i] = new Option('HTML Piano');
+    selectMidiIn[i].selected = 1;
+    selectMidiIn.addEventListener('change', changeMidiIn);
+    selectMidiOut.addEventListener('change', changeMidiOut);
+  });
+  JZZ().openMidiOut().or(onMidiOutFail).and(onMidiOutSuccess);
+  JZZ().openMidiIn().or(onMidiInFail).and(onMidiInSuccess);
+});
 
 --></script>
 </html>

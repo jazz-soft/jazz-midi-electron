@@ -1,3 +1,20 @@
+const { spawn } = require('child_process');
+
+async function startNative(path) {
+}
+
+async function planB() {
+  await new Promise(function(resolve, reject) {
+    if (!process.versions.electron) {
+      reject('jazz-midi-electron requires Electron!');
+    }
+    else {
+      // Electron MIDI bug: when MIDIAccess is just open, inputs and outputs are empty.
+      navigator.requestMIDIAccess().then(function() { setTimeout(resolve, 500); });
+    }
+  });
+}
+
 module.exports = async function() {
   if (!process.versions.electron) {
 console.log('jazz-midi-electron requires Electron!');
@@ -31,6 +48,8 @@ console.log('jazz-midi-electron started on Windows!');
 
     let path = await findWindowsPath(Reg.HKCU);
     console.log('found at:', path);
+
+    await planB();
   }
   else if (process.platform == 'darwin') {
 console.log('jazz-midi-electron started on MacOS!');
