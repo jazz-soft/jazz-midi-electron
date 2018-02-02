@@ -2,6 +2,8 @@ const { spawn } = require('child_process');
 
 var nativeApp;
 var nativeAppVer;
+var exchange;
+var ports = [];
 
 function encode(s) {
   var n = s.length;
@@ -23,11 +25,14 @@ Reader.prototype.read = console.log;
 
 Reader.prototype.consume = function(s) {
   this.str += s;
+//console.log('data received:', s);
   while (this.str.length) {
     if (this.len) {
+//console.log(this.str.length, this.len);
       if (this.str.length < this.len) return;
       this.read(this.str.substring(0, this.len));
       this.str = this.str.substring(this.len);
+//console.log('data consumed!');
       this.len = 0;
     }
     else {
@@ -39,8 +44,48 @@ Reader.prototype.consume = function(s) {
   }
 }
 
-function initExtension() {
-console.log('init web-extension...');
+function createPort() {
+//console.log('create port');
+  var id = ports.length;
+  const native = spawn(nativeApp, []);
+  ports.push(native);
+  const reader = new Reader(function(s) {
+    try { var v = JSON.parse(s);
+      if (v[0] !== 'refresh') v.splice(1, 0, id);
+      exchange.innerText += JSON.stringify(v) + '\n';
+      document.dispatchEvent(new Event('jazz-midi-msg'));
+    }
+    catch (e) {}
+//console.log(v);
+  });
+  native.on('error', function(e) { resolve(); });
+  native.stdout.on('data', function(data) { 
+    var str = '';
+    for (var i = 0; i < data.length; i++) str += String.fromCharCode(data[i]);
+    reader.consume(str);
+  });
+  native.stdin.write(encode('["version"]'));
+}
+
+function eventHandle(e) {
+//console.log('caught event:', e.detail);
+  if (!e.detail) document.dispatchEvent(new Event('jazz-midi-msg'));
+  if (!exchange) {
+    exchange = document.createElement('div');
+    exchange.id = 'jazz-midi-msg';
+    document.body.appendChild(exchange);
+    createPort();
+  }
+  if (!e.detail) return;
+  var n = 0;
+  var v = e.detail.slice();
+  if (v[0] === 'new') {
+    createPort();
+    return;
+  }
+  if (v[0] !== 'refresh' && v[0] !== 'watch' && v[0] !== 'unwatch') n = v.splice(1, 1);
+  if (ports[n]) ports[n].stdin.write(encode(JSON.stringify(v)));
+  document.dispatchEvent(new Event('jazz-midi-msg'));
 }
 
 async function startNativeApp(path) {
@@ -48,12 +93,12 @@ async function startNativeApp(path) {
     if (!path) resolve();
     const native = spawn(path, []);
     const reader = new Reader(function(s) {
-      try { var a = JSON.parse(s);
-        if (a[0] == 'version') {
+      try { var v = JSON.parse(s);
+        if (v[0] == 'version') {
           nativeApp = path;
-          nativeAppVer = a[1];
+          nativeAppVer = v[1];
           if (process.versions.electron) {
-            initExtension();
+            document.addEventListener('jazz-midi', eventHandle);
             resolve(true);
           }
         }
