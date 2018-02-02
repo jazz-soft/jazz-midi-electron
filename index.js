@@ -25,14 +25,11 @@ Reader.prototype.read = console.log;
 
 Reader.prototype.consume = function(s) {
   this.str += s;
-//console.log('data received:', s);
   while (this.str.length) {
     if (this.len) {
-//console.log(this.str.length, this.len);
       if (this.str.length < this.len) return;
       this.read(this.str.substring(0, this.len));
       this.str = this.str.substring(this.len);
-//console.log('data consumed!');
       this.len = 0;
     }
     else {
@@ -45,7 +42,6 @@ Reader.prototype.consume = function(s) {
 }
 
 function createPort() {
-//console.log('create port');
   var id = ports.length;
   const native = spawn(nativeApp, []);
   ports.push(native);
@@ -56,7 +52,6 @@ function createPort() {
       document.dispatchEvent(new Event('jazz-midi-msg'));
     }
     catch (e) {}
-//console.log(v);
   });
   native.on('error', function(e) { resolve(); });
   native.stdout.on('data', function(data) { 
@@ -68,7 +63,6 @@ function createPort() {
 }
 
 function eventHandle(e) {
-//console.log('caught event:', e.detail);
   if (!e.detail) document.dispatchEvent(new Event('jazz-midi-msg'));
   if (!exchange) {
     exchange = document.createElement('div');

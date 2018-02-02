@@ -1,12 +1,12 @@
 {
   "name": "sample-project",
   "version": "0.0.0",
-  "description": "Sample Electron project",
+  "description": "Sample JZZ MIDI project for Electron",
   "main": "index.js",
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "jazz-midi-electron": "0.0.0",
+    "jazz-midi-electron": "0.0.1",
     "jzz": "^0.4.3",
     "jzz-input-kbd": "^1.0.0",
     "jzz-synth-osc": "^1.0.0"
