@@ -16,7 +16,7 @@
     });
 
 
-[![screenshot](screenshot.png)](https://github.com/jazz-soft/jazz-midi-electron/tree/master/sample-project)
+[![screenshot](screenshot.png)](https://github.com/jazz-soft/jazz-midi-electron/tree/master/sample-midi-piano)
 
 Listboxes will show more options
 if you connect a **MIDI instrument** to your computer

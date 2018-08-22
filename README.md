@@ -11,4 +11,4 @@ Please use [**jazz-midi**](https://www.npmjs.com/package/jazz-midi) for command-
 
 Please check out the [**sample project**](https://github.com/jazz-soft/jazz-midi-electron/tree/master/sample-project) for more details.
 
-[![screenshot](https://raw.githubusercontent.com/jazz-soft/jazz-midi-electron/master/sample-project/screenshot.png)](https://github.com/jazz-soft/jazz-midi-electron/tree/master/sample-project)
+[![screenshot](https://raw.githubusercontent.com/jazz-soft/jazz-midi-electron/master/sample-midi-piano/screenshot.png)](https://github.com/jazz-soft/jazz-midi-electron/tree/master/sample-midi-piano)
