@@ -1,5 +1,5 @@
 {
-  "name": "Sample JZZ MIDI project",
+  "name": "sample-midi-piano",
   "version": "0.0.0",
   "description": "Sample JZZ MIDI project for Electron",
   "main": "index.js",
