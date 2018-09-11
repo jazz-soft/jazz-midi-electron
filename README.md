@@ -1,7 +1,8 @@
 # jazz-midi-electron
-## MIDI for Electron
 
 [![npm](https://img.shields.io/npm/v/jazz-midi-electron.svg)](https://www.npmjs.com/package/jazz-midi-electron)
+
+## MIDI for Electron
 
 This module is for [**Electron**](https://electronjs.org) projects only!  
 Please use [**jazz-midi**](https://www.npmjs.com/package/jazz-midi) for command-line **Node.js** applications.
