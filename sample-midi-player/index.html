@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>sample-midi-player</title>
+<style type="text/css">
+body { background-color: #dcf; }
+.inner { position:absolute; bottom:0; left:0; width:100%; text-align:center; }
+select { width:16em; }
+</style>
+</head>
+<body>
+<h1>MIDI Player</h1>
+</body>
+<script><!--
+var shell = require('electron').shell;
+var JZZ = require('jzz');
+require('jzz-midi-smf')(JZZ);
+require('jzz-gui-player')(JZZ);
+require('jzz-synth-osc')(JZZ);
+
+// Register Web Audio synth to have at least one MIDI-Out port
+JZZ.synth.OSC.register('Web Audio');
+
+// JZZ() engine must be started after jazz-midi-electron is initialized
+require('jazz-midi-electron')().then(function() {
+
+var player = new JZZ.gui.Player();
+
+});
+
+--></script>
+</html>
