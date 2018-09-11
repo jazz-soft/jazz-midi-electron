@@ -6,7 +6,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "jazz-midi-electron": "1.0.0",
+    "jazz-midi-electron": "1.0.1",
     "jzz": "^0.5.6",
     "jzz-gui-player": "^0.1.2",
     "jzz-midi-smf": "^1.0.0",
