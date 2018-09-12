@@ -39,7 +39,7 @@ Reader.prototype.consume = function(s) {
       if (!this.len) this.read('');
     }
   }
-}
+};
 
 function createPort() {
   var id = ports.length;
@@ -54,7 +54,7 @@ function createPort() {
     catch (e) {}
   });
   native.on('error', function(e) { resolve(); });
-  native.stdout.on('data', function(data) { 
+  native.stdout.on('data', function(data) {
     var str = '';
     for (var i = 0; i < data.length; i++) str += String.fromCharCode(data[i]);
     reader.consume(str);
