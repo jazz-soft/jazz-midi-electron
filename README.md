@@ -1,7 +1,7 @@
 # jazz-midi-electron
 
 [![npm](https://img.shields.io/npm/v/jazz-midi-electron.svg)](https://www.npmjs.com/package/jazz-midi-electron)
-[![npm](https://img.shields.io/npm/dl/jazz-midi-electron.svg)](https://www.npmjs.com/package/jazz-midi-electron)
+[![npm](https://img.shields.io/npm/dt/jazz-midi-electron.svg)](https://www.npmjs.com/package/jazz-midi-electron)
 [![Build Status](https://travis-ci.org/jazz-soft/jazz-midi-electron.svg?branch=master)](https://travis-ci.org/jazz-soft/jazz-midi-electron)
 
 ## MIDI for Electron
