@@ -4,20 +4,42 @@
 <meta charset="UTF-8">
 <title>sample-midi-player</title>
 <style type="text/css">
-body { background-color: #dcf; }
-.inner { position:absolute; bottom:0; left:0; width:100%; text-align:center; }
-select { width:16em; }
+body { background-color: #ffe; }
 </style>
 </head>
 <body>
 <h1>MIDI Player</h1>
+<div id=player></div>
+
 </body>
 <script><!--
-var shell = require('electron').shell;
+// Loading MIDI libraries
 var JZZ = require('jzz');
 require('jzz-midi-smf')(JZZ);
 require('jzz-gui-player')(JZZ);
 require('jzz-synth-osc')(JZZ);
+
+// Creating menu
+const {dialog, Menu, MenuItem} = require('electron').remote;
+const menu = new Menu();
+const fmenu = new Menu();
+fmenu.append(new MenuItem({label: 'Open', click() { openFile(); } }));
+fmenu.append(new MenuItem({label: 'Exit', role: 'quit' }));
+menu.append(new MenuItem({ label: 'File', submenu: fmenu}));
+Menu.setApplicationMenu(menu);
+
+function openFile() {
+  var fname = dialog.showOpenDialog({
+    properties: ['openFile'],
+    filters: [{ name: 'MIDI Files', extensions: ['mid', 'midi', 'kar', 'rmi'] }, { name: 'All Files', extensions: ['*'] }]
+  });
+  if (typeof fname != 'undefined') loadFile(fname);
+}
+
+function loadFile(fname) {
+alert('LOADING FILE: ' + fname);
+
+}
 
 // Register Web Audio synth to have at least one MIDI-Out port
 JZZ.synth.OSC.register('Web Audio');
@@ -25,7 +47,7 @@ JZZ.synth.OSC.register('Web Audio');
 // JZZ() engine must be started after jazz-midi-electron is initialized
 require('jazz-midi-electron')().then(function() {
 
-var player = new JZZ.gui.Player();
+var player = new JZZ.gui.Player('player');
 
 });
 
