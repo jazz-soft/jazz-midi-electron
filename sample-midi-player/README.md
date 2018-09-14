@@ -18,7 +18,9 @@ WORK IN PROGRESS
     });
 
 
-[![screenshot](screenshot.png)](https://github.com/jazz-soft/jazz-midi-electron/tree/master/sample-midi-piano)
+[![screenshot](screenshot.png)](https://github.com/jazz-soft/jazz-midi-electron/tree/master/sample-midi-player)
 
+The sound quality may be better if you connect a **MIDI instrument** to your computer
+AND/OR install the [**Jazz-Plugin**](https://jazz-soft.net).
 
 *Back to [**jazz-midi-electron**](https://github.com/jazz-soft/jazz-midi-electron).*

@@ -5,11 +5,13 @@
 <title>sample-midi-player</title>
 <style type="text/css">
 body { background-color: #ffe; }
+#err { color: #f00; font-weight: bold; }
 </style>
 </head>
 <body>
 <h1>MIDI Player</h1>
 <div id=player></div>
+<pre id=err></pre>
 
 </body>
 <script><!--
@@ -25,21 +27,43 @@ const menu = new Menu();
 const fmenu = new Menu();
 fmenu.append(new MenuItem({label: 'Open', click() { openFile(); } }));
 fmenu.append(new MenuItem({label: 'Exit', role: 'quit' }));
+//fmenu.append(new MenuItem({label: 'console', role: 'toggledevtools' }));
 menu.append(new MenuItem({ label: 'File', submenu: fmenu}));
 Menu.setApplicationMenu(menu);
 
+const fs = require('fs');
+var player;
+
 function openFile() {
+  showError('');
   var fname = dialog.showOpenDialog({
     properties: ['openFile'],
     filters: [{ name: 'MIDI Files', extensions: ['mid', 'midi', 'kar', 'rmi'] }, { name: 'All Files', extensions: ['*'] }]
-  });
-  if (typeof fname != 'undefined') loadFile(fname);
+  }, function(files) { if (typeof files != 'undefined') loadFile(files[0]) });
 }
 
 function loadFile(fname) {
-alert('LOADING FILE: ' + fname);
-
+  fs.readFile(fname, 'binary', (err, data) => {
+    if (err) showError('Cannot open ' + fname + ': ' + err);
+    else {
+      try {
+        var smf = new JZZ.MIDI.SMF(data);
+        if (player) {
+          player.stop();
+          player.load(smf);
+          player.play();
+        }
+      }
+      catch (err) {
+        showError('Cannot play ' + fname + ': ' + err);
+      }
+    }
+  });
 }
+
+function escapeHtml(str) { return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+
+function showError(err) { document.getElementById('err').innerHTML = escapeHtml(err); }
 
 // Register Web Audio synth to have at least one MIDI-Out port
 JZZ.synth.OSC.register('Web Audio');
@@ -47,7 +71,7 @@ JZZ.synth.OSC.register('Web Audio');
 // JZZ() engine must be started after jazz-midi-electron is initialized
 require('jazz-midi-electron')().then(function() {
 
-var player = new JZZ.gui.Player('player');
+player = new JZZ.gui.Player('player');
 
 });
 
