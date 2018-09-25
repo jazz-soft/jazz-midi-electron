@@ -1,7 +1,5 @@
 # Sample JZZ MIDI Player project for Electron
 
-WORK IN PROGRESS
-
 ### Install
     npm install
 

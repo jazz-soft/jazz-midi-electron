@@ -3,13 +3,13 @@
   "version": "0.0.0",
   "description": "Sample JZZ MIDI project for Electron",
   "main": "index.js",
-  "author": "",
+  "author": "jazz-soft (http://jazz-soft.net/)",
   "license": "MIT",
   "dependencies": {
     "jazz-midi-electron": "1.0.3",
-    "jzz": "^0.5.6",
-    "jzz-input-kbd": "^1.0.4",
-    "jzz-synth-osc": "^1.0.5"
+    "jzz": "^0.5.7",
+    "jzz-input-kbd": "^1.0.5",
+    "jzz-synth-osc": "^1.0.6"
   },
   "private": true
 }
