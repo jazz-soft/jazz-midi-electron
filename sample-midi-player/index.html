@@ -19,7 +19,7 @@ body { background-color: #ffe; }
 var JZZ = require('jzz');
 require('jzz-midi-smf')(JZZ);
 require('jzz-gui-player')(JZZ);
-require('jzz-synth-osc')(JZZ);
+require('jzz-synth-tiny')(JZZ);
 
 // Creating menu
 const {dialog, Menu, MenuItem} = require('electron').remote;
@@ -66,7 +66,7 @@ function escapeHtml(str) { return str.replace(/&/g, "&amp;").replace(/</g, "&lt;
 function showError(err) { document.getElementById('err').innerHTML = escapeHtml(err); }
 
 // Register Web Audio synth to have at least one MIDI-Out port
-JZZ.synth.OSC.register('Web Audio');
+JZZ.synth.Tiny.register('Web Audio');
 
 // JZZ() engine must be started after jazz-midi-electron is initialized
 require('jazz-midi-electron')().then(function() {

@@ -26,7 +26,7 @@ MIDI Out: <select id=selectmidiout><option>Please wait...</option></select>
 </body>
 <script><!--
 var JZZ = require('jzz');
-require('jzz-synth-osc')(JZZ);
+require('jzz-synth-tiny')(JZZ);
 require('jzz-input-kbd')(JZZ);
 
 var selectMidiIn = document.getElementById('selectmidiin');
@@ -41,7 +41,7 @@ function setListbox(lb, s) {
 }
 
 // Register Web Audio synth to have at least one MIDI-Out port
-JZZ.synth.OSC.register('Web Audio');
+JZZ.synth.Tiny.register('Web Audio');
 
 // Create HTML piano
 var piano = JZZ.input.Kbd({at: 'piano', from: 'F4', to: 'E6', onCreate: function(){
