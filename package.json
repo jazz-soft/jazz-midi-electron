@@ -17,7 +17,7 @@
   ],
   "author": "jazz-soft (http://jazz-soft.net/)",
   "dependencies": {
-    "jzz": "^0.6.5",
+    "jzz": "^0.6.6",
     "winreg": "^1.2.4"
   },
   "repository": {

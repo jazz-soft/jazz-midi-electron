@@ -7,9 +7,9 @@
   "license": "MIT",
   "dependencies": {
     "jazz-midi-electron": "1.0.5",
-    "jzz": "^0.6.5",
+    "jzz": "^0.6.6",
     "jzz-input-kbd": "^1.0.7",
-    "jzz-synth-tiny": "^1.0.3"
+    "jzz-synth-tiny": "^1.0.4"
   },
   "private": true
 }

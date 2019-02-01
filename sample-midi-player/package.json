@@ -7,10 +7,10 @@
   "license": "MIT",
   "dependencies": {
     "jazz-midi-electron": "1.0.5",
-    "jzz": "^0.6.5",
-    "jzz-gui-player": "^1.0.2",
-    "jzz-midi-smf": "^1.0.8",
-    "jzz-synth-tiny": "^1.0.3"
+    "jzz": "^0.6.6",
+    "jzz-gui-player": "^1.0.7",
+    "jzz-midi-smf": "^1.1.0",
+    "jzz-synth-tiny": "^1.0.4"
   },
   "private": true
 }
