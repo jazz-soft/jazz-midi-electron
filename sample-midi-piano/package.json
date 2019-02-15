@@ -6,7 +6,7 @@
   "author": "jazz-soft (http://jazz-soft.net/)",
   "license": "MIT",
   "dependencies": {
-    "jazz-midi-electron": "1.0.5",
+    "jazz-midi-electron": "1.0.6",
     "jzz": "^0.6.7",
     "jzz-input-kbd": "^1.0.7",
     "jzz-synth-tiny": "^1.0.5"
