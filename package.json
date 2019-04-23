@@ -1,6 +1,6 @@
 {
   "name": "jazz-midi-electron",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "MIDI for Electron",
   "main": "index.js",
   "scripts": {
@@ -17,7 +17,7 @@
   ],
   "author": "jazz-soft (http://jazz-soft.net/)",
   "dependencies": {
-    "jzz": "^0.7.3",
+    "jzz": "^0.7.4",
     "winreg": "^1.2.4"
   },
   "repository": {
