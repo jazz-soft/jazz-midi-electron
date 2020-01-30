@@ -6,7 +6,7 @@
   "author": "jazz-soft (http://jazz-soft.net/)",
   "license": "MIT",
   "dependencies": {
-    "jazz-midi-electron": "^1.1.3",
+    "jazz-midi-electron": "^1.1.4",
     "jzz": "^1.0.1",
     "jzz-gui-player": "^1.3.6",
     "jzz-midi-smf": "^1.3.3",
