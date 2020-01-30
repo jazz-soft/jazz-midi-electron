@@ -101,6 +101,7 @@ async function startNativeApp(path) {
       resolve();
     });
     native.on('error', function(e) { resolve(); });
+    native.stdin.on('error', function(e) { resolve(); });
     native.stdout.on('data', function(data) { reader.consume(data); });
     native.stdin.write(encode('["version"]'));
     native.stdin.end();
