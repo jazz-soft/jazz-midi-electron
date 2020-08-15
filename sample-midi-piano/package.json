@@ -9,7 +9,7 @@
     "jazz-midi-electron": "^1.1.5",
     "jzz": "^1.0.9",
     "jzz-input-kbd": "^1.1.5",
-    "jzz-synth-tiny": "^1.1.8"
+    "jzz-synth-tiny": "^1.2.0"
   },
   "private": true
 }
