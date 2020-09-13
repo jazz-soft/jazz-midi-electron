@@ -9,7 +9,7 @@
     "jazz-midi-electron": "^1.1.5",
     "jzz": "^1.0.9",
     "jzz-gui-player": "^1.4.4",
-    "jzz-midi-smf": "^1.3.9",
+    "jzz-midi-smf": "^1.4.0",
     "jzz-synth-tiny": "^1.2.0"
   },
   "private": true
