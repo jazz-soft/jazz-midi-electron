@@ -36,10 +36,12 @@ var player;
 
 function openFile() {
   showError('');
-  var fname = dialog.showOpenDialog({
+  dialog.showOpenDialog({
     properties: ['openFile'],
     filters: [{ name: 'MIDI Files', extensions: ['mid', 'midi', 'kar', 'rmi'] }, { name: 'All Files', extensions: ['*'] }]
-  }, function(files) { if (typeof files != 'undefined') loadFile(files[0]) });
+  }).then(function(result) {
+    if (result.filePaths && result.filePaths[0]) loadFile(result.filePaths[0]);
+  });
 }
 
 function loadFile(fname) {

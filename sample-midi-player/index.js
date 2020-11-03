@@ -8,8 +8,8 @@ let win
 
 function createWindow () {
   // Create the browser window.
-  win = new BrowserWindow({width: 640, height: 400, webPreferences: { nodeIntegration: true }})
-
+  win = new BrowserWindow({width: 640, height: 400, webPreferences: { nodeIntegration: true, enableRemoteModule: true }})
+  //win.webContents.openDevTools();
   // and load the index.html of the app.
   win.loadURL(url.format({
     pathname: path.join(__dirname, 'index.html'),
