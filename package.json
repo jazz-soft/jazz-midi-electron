@@ -7,7 +7,6 @@
     "test": "node test"
   },
   "keywords": [
-    "MIDI",
     "midi",
     "webmidi",
     "webmidiapi",
