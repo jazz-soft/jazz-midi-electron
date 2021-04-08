@@ -2,7 +2,7 @@
 
 [![npm](https://img.shields.io/npm/v/jazz-midi-electron.svg)](https://www.npmjs.com/package/jazz-midi-electron)
 [![npm](https://img.shields.io/npm/dt/jazz-midi-electron.svg)](https://www.npmjs.com/package/jazz-midi-electron)
-[![build](https://github.com/jazz-soft/jazz-midi-electron/actions/workflows/test.yml/badge.svg)](https://github.com/jazz-soft/jazz-midi-electron/actions)
+[![build](https://github.com/jazz-soft/jazz-midi-electron/actions/workflows/build.yml/badge.svg)](https://github.com/jazz-soft/jazz-midi-electron/actions)
 
 ## MIDI for Electron
 

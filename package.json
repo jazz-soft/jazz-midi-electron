@@ -1,6 +1,6 @@
 {
   "name": "jazz-midi-electron",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "description": "MIDI for Electron",
   "main": "index.js",
   "scripts": {
