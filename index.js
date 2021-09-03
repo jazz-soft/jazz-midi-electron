@@ -53,7 +53,6 @@ function createPort() {
     }
     catch (e) {}
   });
-  native.on('error', function(e) { resolve(); });
   native.stdout.on('data', function(data) {
     var str = '';
     for (var i = 0; i < data.length; i++) str += String.fromCharCode(data[i]);
@@ -83,7 +82,7 @@ function eventHandle(e) {
 }
 
 async function startNativeApp(path) {
-  return await new Promise(function(resolve, reject) {
+  return await new Promise(function(resolve/*, reject*/) {
     if (!path) resolve();
     const native = spawn(path, []);
     const reader = new Reader(function(s) {
@@ -100,8 +99,8 @@ async function startNativeApp(path) {
       catch (e) {}
       resolve();
     });
-    native.on('error', function(e) { resolve(); });
-    native.stdin.on('error', function(e) { resolve(); });
+    native.on('error', function(/*e*/) { resolve(); });
+    native.stdin.on('error', function(/*e*/) { resolve(); });
     native.stdout.on('data', function(data) { reader.consume(data); });
     native.stdin.write(encode('["version"]'));
     native.stdin.end();
@@ -149,7 +148,7 @@ module.exports = async function() {
     }
     throw('jazz-midi-electron requires Electron!');
   }
-  await new Promise(function(resolve, reject) {
+  await new Promise(function(resolve/*, reject*/) {
     // Electron MIDI bug: when MIDIAccess is just open, inputs and outputs are empty.
     navigator.requestMIDIAccess().then(function() { setTimeout(resolve, 500); });
   });

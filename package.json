@@ -4,7 +4,8 @@
   "description": "MIDI for Electron",
   "main": "index.js",
   "scripts": {
-    "test": "node test"
+    "test": "node test",
+    "lint": "eslint index.js"
   },
   "keywords": [
     "midi",
@@ -25,5 +26,8 @@
   },
   "homepage": "http://jazz-soft.net",
   "bugs": "http://jazz-soft.org",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^7.32.0"
+  }
 }
