@@ -1,6 +1,8 @@
 const {app, BrowserWindow} = require('electron')
 const path = require('path')
 const url = require('url')
+const remote_main = require('@electron/remote/main');
+remote_main.initialize();
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -8,7 +10,8 @@ let win
 
 function createWindow () {
   // Create the browser window.
-  win = new BrowserWindow({width: 640, height: 400, webPreferences: { nodeIntegration: true, enableRemoteModule: true }})
+  win = new BrowserWindow({width: 640, height: 400, webPreferences: { nodeIntegration: true, contextIsolation: false, enableRemoteModule: true }})
+  remote_main.enable(win.webContents);
   //win.webContents.openDevTools();
   // and load the index.html of the app.
   win.loadURL(url.format({

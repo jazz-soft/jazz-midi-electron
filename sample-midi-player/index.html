@@ -22,7 +22,7 @@ require('jzz-gui-player')(JZZ);
 require('jzz-synth-tiny')(JZZ);
 
 // Creating menu
-const {dialog, Menu, MenuItem} = require('electron').remote;
+const {dialog, Menu, MenuItem} = require('@electron/remote');
 const menu = new Menu();
 const fmenu = new Menu();
 fmenu.append(new MenuItem({label: 'Open', click() { openFile(); } }));
