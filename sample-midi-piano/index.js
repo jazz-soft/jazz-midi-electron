@@ -8,7 +8,7 @@ let win
 
 function createWindow () {
   // Create the browser window.
-  win = new BrowserWindow({width: 640, height: 400, webPreferences: { nodeIntegration: true }})
+  win = new BrowserWindow({width: 640, height: 400, webPreferences: { nodeIntegration: true, contextIsolation: false }})
   //win.webContents.openDevTools();
 
   // and load the index.html of the app.

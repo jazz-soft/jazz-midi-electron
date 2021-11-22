@@ -17,7 +17,7 @@
   ],
   "author": "jazz-soft (http://jazz-soft.net/)",
   "dependencies": {
-    "jzz": "^1.4.0",
+    "jzz": "^1.4.6",
     "winreg": "^1.2.4"
   },
   "repository": {
@@ -28,6 +28,6 @@
   "bugs": "http://jazz-soft.org",
   "license": "MIT",
   "devDependencies": {
-    "eslint": "^7.32.0"
+    "eslint": "^8.3.0"
   }
 }
