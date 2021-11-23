@@ -120,7 +120,7 @@ module.exports = async function() {
             else {
               for (var i = 0; i < arr.length; i++) {
                 if (arr[i].name == '(Default)') {
-                  resolve(arr[i].value.replace(/\\[^\\]+$/, '\\jazz-chrome.exe'));
+                  resolve(arr[i].value.replace(/\\[^\\]+$/, '\\'));
                 }
               }
               reject();
@@ -130,13 +130,19 @@ module.exports = async function() {
       }
       catch (e) {}
     }
-    if (await startNativeApp(await findWindowsPath(Reg.HKLM))) return;
-    if (await startNativeApp(await findWindowsPath(Reg.HKCU))) return;
+    var winpath = await findWindowsPath(Reg.HKLM);
+    if (await startNativeApp(winpath + 'jazz-midi.exe')) return;
+    if (await startNativeApp(winpath + 'jazz-chrome.exe')) return;
+    winpath = await findWindowsPath(Reg.HKCU);
+    if (await startNativeApp(winpath + 'jazz-midi.exe')) return;
+    if (await startNativeApp(winpath + 'jazz-chrome.exe')) return;
   }
   else if (process.platform == 'darwin') {
+    if (await startNativeApp('/Library/Internet Plug-Ins/jazz-midi')) return;
     if (await startNativeApp('/Library/Internet Plug-Ins/jazz-chrome')) return;
   }
   else if (process.platform == 'linux') {
+    if (await startNativeApp('/usr/lib/mozilla/plugins/jazz-midi')) return;
     if (await startNativeApp('/usr/lib/mozilla/plugins/jazz-chrome')) return;
   }
   if (!process.versions.electron) {
