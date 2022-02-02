@@ -7,13 +7,13 @@
   "license": "MIT",
   "dependencies": {
     "jazz-midi-electron": "^1.2.2",
-    "jzz": "^1.4.6",
-    "jzz-gui-select": "^1.0.3",
-    "jzz-input-kbd": "^1.2.2",
+    "jzz": "^1.4.7",
+    "jzz-gui-select": "^1.0.5",
+    "jzz-input-kbd": "^1.2.3",
     "jzz-synth-tiny": "^1.2.8"
   },
   "private": true,
   "devDependencies": {
-    "electron": "^16.0.1"
+    "electron": "^17.0.0"
   }
 }

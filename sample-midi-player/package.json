@@ -6,11 +6,11 @@
   "author": "jazz-soft (http://jazz-soft.net/)",
   "license": "MIT",
   "dependencies": {
-    "@electron/remote": "^2.0.1",
+    "@electron/remote": "^2.0.4",
     "jazz-midi-electron": "^1.2.2",
-    "jzz": "^1.4.6",
-    "jzz-gui-player": "^1.5.2",
-    "jzz-midi-smf": "^1.6.4",
+    "jzz": "^1.4.7",
+    "jzz-gui-player": "^1.5.5",
+    "jzz-midi-smf": "^1.6.7",
     "jzz-synth-tiny": "^1.2.8"
   },
   "private": true
