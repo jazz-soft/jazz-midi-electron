@@ -7,9 +7,9 @@
   "license": "MIT",
   "dependencies": {
     "@electron/remote": "^2.0.4",
-    "jazz-midi-electron": "^1.2.2",
-    "jzz": "^1.4.7",
-    "jzz-gui-player": "^1.5.5",
+    "jazz-midi-electron": "^1.2.3",
+    "jzz": "^1.4.8",
+    "jzz-gui-player": "^1.5.6",
     "jzz-midi-smf": "^1.6.7",
     "jzz-synth-tiny": "^1.2.8"
   },
