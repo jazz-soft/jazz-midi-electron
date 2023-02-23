@@ -4,7 +4,7 @@
   "description": "MIDI for Electron",
   "main": "index.js",
   "scripts": {
-    "test": "node test",
+    "test": "nyc node test",
     "lint": "eslint index.js",
     "coverage": "nyc report --reporter=lcov"
   },
