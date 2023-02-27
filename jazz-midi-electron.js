@@ -21,9 +21,29 @@
   };
   if (typeof navigator != 'undefined') {
     _env = 'webview';
+    document.addEventListener('jazz-midi', function(msg) {
+      window['jazz-midi'].send(msg.detail);
+    });
+    window['jazz-midi'].receive(function(evt, data) {
+      document.dispatchEvent(new CustomEvent('jazz-midi-msg', { detail: data }));
+    });
   }
-
-console.log('context:', _env);
-
+  else {
+    var JZZ = require('jzz');
+    var electron = require('electron');
+    var ipcMain = electron.ipcMain;
+    var webContents = electron.webContents;
+    ipcMain.on('jazz-midi', function(evt, data) {
+      console.log('received data:', data);
+      var wc = webContents.fromId(evt.sender.id);
+      if (!data || data[0] == 'version') {
+        wc.send('jazz-midi', ['version', 0, _ver]);
+      }
+    });
+    JME.init = function(win) {
+      win.on('closed', function() {
+      })
+    };
+  }
   return JME;
 });
