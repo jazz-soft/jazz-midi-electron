@@ -1,3 +1,5 @@
 .*
 sample-*
-Gruntfile.js
+test*
+coverage
+!test

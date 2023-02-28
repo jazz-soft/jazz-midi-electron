@@ -35,9 +35,24 @@
     var webContents = electron.webContents;
     ipcMain.on('jazz-midi', function(evt, data) {
       console.log('received data:', data);
+      var i;
       var wc = webContents.fromId(evt.sender.id);
       if (!data || data[0] == 'version') {
         wc.send('jazz-midi', ['version', 0, _ver]);
+      }
+      else if (data[0] == 'refresh') {
+        JZZ().refresh().and(function() {
+          var info = this.info();
+          var ins = [];
+          var outs = [];
+          for (i = 0; i < info.inputs.length; i++) {
+            ins.push({ name: info.inputs[i].name, manufacturer: info.inputs[i].manufacturer, version: info.inputs[i].version });
+          }
+          for (i = 0; i < info.outputs.length; i++) {
+            outs.push({ name: info.outputs[i].name, manufacturer: info.outputs[i].manufacturer, version: info.outputs[i].version });
+          }
+          wc.send('jazz-midi', ['refresh', { ins: ins, outs: outs }]);
+        });
       }
     });
     JME.init = function(win) {
