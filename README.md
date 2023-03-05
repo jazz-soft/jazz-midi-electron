@@ -7,8 +7,9 @@
 
 ## MIDI for Electron
 
-This module is for [**Electron**](https://electronjs.org) projects only!  
-Please use [**jazz-midi**](https://www.npmjs.com/package/jazz-midi) for command-line **Node.js** applications.
+MIDI integration in [**Electron**](https://electronjs.org) applications.
+
+( see also: [jazz-midi-vscode](https://github.com/jazz-soft/jazz-midi-vscode) ... )
 
 ### Install
 `npm install jazz-midi-electron --save`
