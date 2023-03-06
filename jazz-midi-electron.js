@@ -31,7 +31,7 @@
   else {
     var JZZ = require('jzz');
     var electron = require('electron');
-    var ipcMain = electron.ipcMain;
+    var ipcMain = electron.ipcMain || ipcMainTestFake;
     var webContents = electron.webContents;
     var CLs = [];
     var client = function(wc, n) {
@@ -117,12 +117,13 @@
       }
     });
     JME.init = function(win) {
-      client(win.webContents, 0);
+      var wc = win.webContents;
+      client(wc, 0);
       win.on('closed', function() {
         var CC = [];
         var c;
         for (c of CLs) {
-          if (c.wc == win.webContents) {
+          if (c.wc == wc) {
             if (c.out) c.out.close();
             if (c.in) c.in.close();
           }
