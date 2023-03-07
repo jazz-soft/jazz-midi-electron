@@ -11,10 +11,10 @@ MIDI integration in [**Electron**](https://electronjs.org) applications.
 
 ( see also: [jazz-midi-vscode](https://github.com/jazz-soft/jazz-midi-vscode) ... )
 
-### Install
+## Install
 `npm install jazz-midi-electron --save`
 
-### Use
+## Usage
 
 Please check out the sample projects for more details:
 
