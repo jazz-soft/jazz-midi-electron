@@ -32,7 +32,7 @@
     var JZZ = require('jzz');
     var electron = require('electron');
     var ipcMain = electron.ipcMain || ipcMainTestFake;
-    var webContents = electron.webContents;
+    var webContents = electron.webContents || webContentsTestFake;
     var CLs = [];
     var client = function(wc, n) {
       var c;
