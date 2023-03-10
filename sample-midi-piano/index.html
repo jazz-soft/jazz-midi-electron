@@ -3,6 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <title>sample-midi-piano</title>
+<script src='node_modules/jazz-midi-electron/jazz-midi-electron.js'></script>
+<script src='node_modules/jzz/javascript/JZZ.js'></script>
+<script src='node_modules/jzz-synth-tiny/javascript/JZZ.synth.Tiny.js'></script>
+<script src='node_modules/jzz-input-kbd/javascript/JZZ.input.Kbd.js'></script>
+<script src='node_modules/jzz-gui-select/javascript/JZZ.gui.Select.js'></script>
 <style type="text/css">
 body { background-color: #dcf; }
 .inner { position:absolute; bottom:0; left:0; width:100%; text-align:center; }
@@ -24,14 +29,7 @@ MIDI Out: <select id=selectmidiout><option>Please wait...</option></select>
 </p>
 
 </body>
-<script><!--
-var JZZ = require('jzz');
-require('jzz-synth-tiny')(JZZ);
-require('jzz-input-kbd')(JZZ);
-require('jzz-gui-select')(JZZ);
-const { shell } = require('electron');
-
-// Register Web Audio synth to have at least one MIDI-Out port
+<script>
 JZZ.synth.Tiny.register('Web Audio');
 
 // Create HTML piano
@@ -56,15 +54,12 @@ JZZ.input.ASCII({
   Z:'C5', S:'C#5', X:'D5', D:'D#5', C:'E5', V:'F5', G:'F#5', B:'G5', H:'Ab5', N:'A5', J:'Bb5', M:'B5'
 }).connect(piano);
 
-// JZZ() engine must be started after jazz-midi-electron is initialized
-require('jazz-midi-electron')().then(function() {
-  var midiin = JZZ.gui.SelectMidiIn({ at: 'selectmidiin', none: 'HTML Piano' });
-  var midiout = JZZ.gui.SelectMidiOut({ at: 'selectmidiout', none: 'No MIDI Out' });
-  midiin.connect(piano);
-  piano.connect(midiout);
-  // Open the default MIDI Out port:
-  midiout.select();
-});
-
---></script>
+var midiin = JZZ.gui.SelectMidiIn({ at: 'selectmidiin', none: 'HTML Piano' });
+var midiout = JZZ.gui.SelectMidiOut({ at: 'selectmidiout', none: 'No MIDI Out' });
+midiin.connect(piano);
+piano.connect(midiout);
+midiin.onSelect = function() { piano.clear(); };
+// Open the default MIDI Out port:
+midiout.select();
+</script>
 </html>
