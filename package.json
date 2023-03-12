@@ -24,8 +24,8 @@
     "type": "git",
     "url": "https://github.com/jazz-soft/jazz-midi-electron.git"
   },
-  "homepage": "http://jazz-soft.net",
-  "bugs": "http://jazz-soft.org",
+  "homepage": "https://jazz-soft.net",
+  "bugs": "https://github.com/jazz-soft/jazz-midi-electron/issues",
   "license": "MIT",
   "devDependencies": {
     "electron": "^23.1.3",

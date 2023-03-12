@@ -1,4 +1,4 @@
-const {app, BrowserWindow} = require('electron');
+const { app, BrowserWindow, ipcMain, Menu, shell } = require('electron');
 const path = require('path');
 const url = require('url');
 const JZZ = require('jzz');
@@ -27,6 +27,7 @@ setInterval(function() {
 JZZ.addMidiIn('Virtual MIDI-In', vmIn);
 
 let win;
+const isMac = process.platform === 'darwin';
 
 function createWindow () {
   win = new BrowserWindow({
@@ -48,16 +49,12 @@ function createWindow () {
   }));
 }
 
+ipcMain.on('open-url', (evt, url) => { shell.openExternal(url); });
+
+Menu.setApplicationMenu(null);
+
 app.on('ready', createWindow);
 
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
-});
+app.on('window-all-closed', () => { if (!isMac) app.quit(); });
 
-app.on('activate', () => {
-  if (win === null) {
-    createWindow();
-  }
-});
+app.on('activate', () => { if (win === null) createWindow(); });
