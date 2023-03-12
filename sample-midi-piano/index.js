@@ -40,6 +40,7 @@ function createWindow () {
   //uncomment for debug:
   //win.webContents.openDevTools();
 
+  //enable MIDI in the renderer view:
   JME.init(win);
 
   win.loadURL(url.format({

@@ -3,6 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <title>sample-midi-player</title>
+<script src='node_modules/jazz-midi-electron/jazz-midi-electron.js'></script>
+<script src='node_modules/jzz/javascript/JZZ.js'></script>
+<script src='node_modules/jzz-midi-smf/javascript/JZZ.midi.SMF.js'></script>
+<script src='node_modules/jzz-gui-player/javascript/JZZ.gui.Player.js'></script>
+<script src='node_modules/jzz-synth-tiny/javascript/JZZ.synth.Tiny.js'></script>
 <style type="text/css">
 body { background-color: #ffe; }
 #err { color: #f00; font-weight: bold; }
@@ -14,68 +19,28 @@ body { background-color: #ffe; }
 <pre id=err></pre>
 
 </body>
-<script><!--
-// Loading MIDI libraries
-var JZZ = require('jzz');
-require('jzz-midi-smf')(JZZ);
-require('jzz-gui-player')(JZZ);
-require('jzz-synth-tiny')(JZZ);
-
-// Creating menu
-const {dialog, Menu, MenuItem} = require('@electron/remote');
-const menu = new Menu();
-const fmenu = new Menu();
-fmenu.append(new MenuItem({label: 'Open', click() { openFile(); } }));
-fmenu.append(new MenuItem({label: 'Exit', role: 'quit' }));
-//fmenu.append(new MenuItem({label: 'console', role: 'toggledevtools' }));
-menu.append(new MenuItem({ label: 'File', submenu: fmenu}));
-Menu.setApplicationMenu(menu);
-
-const fs = require('fs');
-var player;
-
-function openFile() {
-  showError('');
-  dialog.showOpenDialog({
-    properties: ['openFile'],
-    filters: [{ name: 'MIDI Files', extensions: ['mid', 'midi', 'kar', 'rmi'] }, { name: 'All Files', extensions: ['*'] }]
-  }).then(function(result) {
-    if (result.filePaths && result.filePaths[0]) loadFile(result.filePaths[0]);
-  });
-}
-
-function loadFile(fname) {
-  fs.readFile(fname, 'binary', (err, data) => {
-    if (err) showError('Cannot open ' + fname + ': ' + err);
-    else {
-      try {
-        var smf = new JZZ.MIDI.SMF(data);
-        if (player) {
-          player.stop();
-          player.load(smf);
-          player.play();
-        }
-      }
-      catch (err) {
-        showError('Cannot play ' + fname + ': ' + err);
-      }
-    }
-  });
-}
-
-function escapeHtml(str) { return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
-
-function showError(err) { document.getElementById('err').innerHTML = escapeHtml(err); }
-
+<script>
 // Register Web Audio synth to have at least one MIDI-Out port
 JZZ.synth.Tiny.register('Web Audio');
+var player = new JZZ.gui.Player('player');
 
-// JZZ() engine must be started after jazz-midi-electron is initialized
-require('jazz-midi-electron')().then(function() {
-
-player = new JZZ.gui.Player('player');
-
+onLoadMidi(function(evt, data) {
+  if (data.err) {
+    showError(err);
+  }
+  else {
+    try {
+        var smf = new JZZ.MIDI.SMF(data.data);
+        player.stop();
+        player.load(smf);
+        player.play();
+      }
+      catch (err) {
+        showError('Cannot play ' + data.file + ': ' + err);
+      }
+  }
 });
-
---></script>
+function escapeHtml(str) { return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+function showError(err) { document.getElementById('err').innerHTML = escapeHtml(err); }
+</script>
 </html>
