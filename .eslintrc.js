@@ -8,6 +8,11 @@ module.exports = {
   "parserOptions": {
     "ecmaVersion": 8
   },
+  "globals": {
+    "ipcMainTestFake": "readonly",
+    "webContentsTestFake": "readonly",
+    "define": "readonly"
+  },
   "rules": {
     "no-inner-declarations" : "off",
     "no-empty" : ["warn", { "allowEmptyCatch": true }]
