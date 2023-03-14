@@ -18,6 +18,8 @@ You are getting:
 - improved code security
 - no additional installs required
 
+## Examples
+
 [**sample-midi-piano**](https://github.com/jazz-soft/jazz-midi-electron/tree/master/sample-midi-piano)  
 [![screenshot](https://raw.githubusercontent.com/jazz-soft/jazz-midi-electron/master/sample-midi-piano/screenshot.png)](https://github.com/jazz-soft/jazz-midi-electron/tree/master/sample-midi-piano)
 
@@ -28,7 +30,7 @@ You are getting:
 `npm install jazz-midi-electron --save`
 
 ## Usage
-( see the sample projects above... )
+( see the examples above... )
 
 ### Main Process
 
