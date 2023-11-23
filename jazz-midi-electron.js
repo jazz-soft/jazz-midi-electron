@@ -13,7 +13,7 @@
   }
 })(this, function() {
 
-  var _ver = '2.0.0';
+  var _ver = '2.0.1';
   var _env = 'backend';
   var JME = {
     version: function() { return _ver; },
