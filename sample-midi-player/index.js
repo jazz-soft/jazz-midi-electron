@@ -39,7 +39,7 @@ function createWindow () {
 function openFile() {
   dialog.showOpenDialog({
     properties: ['openFile'],
-    filters: [{ name: 'MIDI Files', extensions: ['mid', 'midi', 'kar', 'rmi'] }, { name: 'All Files', extensions: ['*'] }]
+    filters: [{ name: 'MIDI Files', extensions: ['mid', 'midi', 'midi2', 'kar', 'rmi'] }, { name: 'All Files', extensions: ['*'] }]
   }).then(function(result) {
     if (result.filePaths && result.filePaths[0]) {
       fs.readFile(result.filePaths[0], 'binary', (err, data) => {

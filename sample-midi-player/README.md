@@ -6,7 +6,9 @@
 `npm install`
 
 ## Run
-`electron .`
+`electron .`  
+or  
+`npm start`
 
 ## Package
 `npm run make`
