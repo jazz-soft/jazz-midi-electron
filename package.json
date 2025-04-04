@@ -19,7 +19,7 @@
   ],
   "author": "jazz-soft (http://jazz-soft.net/)",
   "dependencies": {
-    "jzz": "^1.8.4"
+    "jzz": "^1.9.2"
   },
   "repository": {
     "type": "git",
@@ -29,9 +29,9 @@
   "bugs": "https://github.com/jazz-soft/jazz-midi-electron/issues",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^30.0.8",
-    "eslint": "^9.3.0",
-    "mocha": "^10.4.0",
-    "nyc": "^15.1.0"
+    "electron": "^35.1.4",
+    "eslint": "^9.24.0",
+    "mocha": "^11.1.0",
+    "nyc": "^17.1.0"
   }
 }
